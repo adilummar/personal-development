@@ -1,69 +1,110 @@
-import Image from "next/image";
+"use client";
+
+import { motion } from "framer-motion";
+import { CheckCircle2, CreditCard, ChevronRight, PieChart } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } },
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="flex-1 w-full max-w-2xl mx-auto px-6 py-12 flex flex-col">
+      {/* Header */}
+      <motion.header 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="flex items-center justify-between mb-16"
+      >
+        <div>
+          <h1 className="text-3xl font-light tracking-tight text-foreground">Good evening, User.</h1>
+          <p className="text-sm text-foreground/50 mt-1 font-mono uppercase tracking-widest">Monday, 23 Sep</p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="h-10 w-10 rounded-full bg-surface border border-border flex items-center justify-center overflow-hidden">
+          <div className="w-full h-full bg-accent/20 flex items-center justify-center text-accent text-xs font-semibold">U</div>
         </div>
-      </main>
-    </div>
+      </motion.header>
+
+      {/* Main Content Grid */}
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="grid gap-6"
+      >
+        {/* Reminders Card */}
+        <motion.div variants={itemVariants}>
+          <Link href="/reminders" className="group block">
+            <div className="bg-surface rounded-2xl p-6 border border-border hover:border-accent/50 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
+                <ChevronRight className="w-5 h-5 text-accent" />
+              </div>
+              <div className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center mb-6">
+                <CheckCircle2 className="w-5 h-5 text-foreground" />
+              </div>
+              <h2 className="text-xl font-medium mb-1">Focus & Reminders</h2>
+              <p className="text-sm text-foreground/60 mb-6">3 tasks remaining today</p>
+              
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-4 h-4 rounded-full border border-accent/50 flex-shrink-0" />
+                  <span className="text-foreground/90">Review Q3 Financials</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-4 h-4 rounded-full border border-foreground/30 flex-shrink-0" />
+                  <span className="text-foreground/90">Call Family</span>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </motion.div>
+
+        {/* Finance Card */}
+        <motion.div variants={itemVariants}>
+          <Link href="/finance" className="group block">
+            <div className="bg-surface rounded-2xl p-6 border border-border hover:border-accent/50 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
+                <ChevronRight className="w-5 h-5 text-accent" />
+              </div>
+              <div className="flex justify-between items-start mb-6">
+                <div className="w-10 h-10 rounded-full bg-foreground/5 flex items-center justify-center">
+                  <CreditCard className="w-5 h-5 text-foreground" />
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-foreground/50 font-mono uppercase tracking-wider mb-1">Net Worth</p>
+                  <p className="text-xl font-medium">$124,500.00</p>
+                </div>
+              </div>
+              <h2 className="text-xl font-medium mb-1">Wealth Control</h2>
+              <p className="text-sm text-foreground/60 mb-6">September budget on track</p>
+              
+              <div className="h-1 bg-foreground/10 rounded-full overflow-hidden">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: "65%" }}
+                  transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
+                  className="h-full bg-accent" 
+                />
+              </div>
+              <div className="flex justify-between mt-2 text-xs text-foreground/50">
+                <span>$3,250 spent</span>
+                <span>$1,750 remaining</span>
+              </div>
+            </div>
+          </Link>
+        </motion.div>
+      </motion.div>
+    </main>
   );
 }
